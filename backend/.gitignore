@@ -1,0 +1,15 @@
+# Git ignore — Connection stringlar va baza fayllarini gitga qo'shmaslik
+resort.db
+resort.db-shm
+resort.db-wal
+
+# .NET build artifacts
+bin/
+obj/
+
+# User secrets
+*.user
+appsettings.Development.json
+
+# Logs
+*.log
