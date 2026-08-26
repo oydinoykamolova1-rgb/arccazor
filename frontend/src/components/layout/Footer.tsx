@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, Mail, MapPin, Send, Globe, Share2, Clock, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, Globe, Share2, Clock, ShieldCheck, FileText, Shield } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -46,7 +46,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm text-emerald-200/90">
               <li>
                 <Link href="/rooms" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                  <span>›</span> Xonalar va Kotterjlar
+                  <span>›</span> Xonalar va Kottedjlar
                 </Link>
               </li>
               <li>
@@ -60,13 +60,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/activities" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                  <span>›</span> Faoliyatlar va O'yinlar
+                <Link href="/blog" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                  <span>›</span> Blog va Maqolalar
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
-                  <span>›</span> Konferensiyalar va To'ylar
+                <Link href="/faq" className="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                  <span>›</span> Savol-Javoblar (FAQ)
                 </Link>
               </li>
               <li>
@@ -132,7 +132,15 @@ export default function Footer() {
 
         <div className="mt-12 pt-6 border-t border-[#294232] flex flex-col md:flex-row items-center justify-between text-xs text-emerald-300/70 gap-4">
           <p>© {new Date().getFullYear()} ARCHAZOR Mountain Resort & Spa. Barcha huquqlar himoyalangan.</p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-6">
+            <Link href="/privacy" className="hover:text-amber-300 transition-colors flex items-center gap-1">
+              <Shield className="w-3.5 h-3.5" />
+              <span>Maxfiylik Siyosati</span>
+            </Link>
+            <Link href="/terms" className="hover:text-amber-300 transition-colors flex items-center gap-1">
+              <FileText className="w-3.5 h-3.5" />
+              <span>Foydalanish Shartlari</span>
+            </Link>
             <Link href="/admin" className="hover:text-amber-300 flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Admin Tizimi</span>

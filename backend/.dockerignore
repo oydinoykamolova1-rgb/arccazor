@@ -1,0 +1,7 @@
+bin/
+obj/
+.vs/
+.git/
+.gitignore
+appsettings.Development.json
+*.db

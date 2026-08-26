@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Phone, Mail, MapPin, Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
-import { submitContactRequest } from '../../lib/api';
+import { submitInquiry } from '../../lib/api';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -27,7 +27,8 @@ export default function ContactPage() {
     setErrorMsg('');
 
     try {
-      await submitContactRequest({
+      await submitInquiry({
+        type: 'GeneralContact',
         fullName: formData.fullName,
         phone: formData.phone,
         email: formData.email || undefined,
@@ -44,7 +45,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 space-y-12">
+    <div className="container mx-auto px-4 py-12 space-y-12 bg-[#f6f3ed]">
       
       {/* Header */}
       <div className="bg-[#244934] text-white rounded-3xl p-8 md:p-12 shadow-xl border border-[#356147] text-center space-y-4">
@@ -52,7 +53,7 @@ export default function ContactPage() {
           <Phone className="w-4 h-4" />
           <span>Aloqa va Lokatsiya</span>
         </div>
-        <h1 className="font-serif-luxury text-3xl md:text-5xl font-bold">
+        <h1 className="font-serif text-3xl md:text-5xl font-bold">
           Biz Bilan Bog'laning
         </h1>
         <p className="text-sm md:text-base text-emerald-100 max-w-2xl mx-auto font-light">
@@ -65,7 +66,7 @@ export default function ContactPage() {
         {/* Contact Form connected to API */}
         <div className="bg-white rounded-3xl p-8 border border-[#ddd8ce] shadow-xl space-y-6">
           <div>
-            <h2 className="font-serif-luxury text-2xl font-bold text-[#244934]">Xabar Yo'llash</h2>
+            <h2 className="font-serif text-2xl font-bold text-[#244934]">Xabar Yo'llash</h2>
             <p className="text-xs text-gray-500 mt-1">Formani to'ldiring va menejerimiz tez orada javob beradi.</p>
           </div>
 
@@ -167,7 +168,7 @@ export default function ContactPage() {
         {/* Contact Info & Location details */}
         <div className="space-y-6">
           <div className="bg-[#244934] text-white rounded-3xl p-8 shadow-xl border border-[#356147] space-y-6">
-            <h2 className="font-serif-luxury text-2xl font-bold text-amber-200">Resort Kontaktlari</h2>
+            <h2 className="font-serif text-2xl font-bold text-amber-200">Resort Kontaktlari</h2>
             
             <div className="space-y-4 text-sm text-emerald-100">
               <div className="flex items-start gap-3">

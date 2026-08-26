@@ -15,6 +15,12 @@ public class ResortDbContext : DbContext
     public DbSet<RoomAmenity> RoomAmenities => Set<RoomAmenity>();
     public DbSet<ContactRequest> ContactRequests => Set<ContactRequest>();
     public DbSet<BookingRequest> BookingRequests => Set<BookingRequest>();
+    public DbSet<MenuItem> MenuItems => Set<MenuItem>();
+    public DbSet<SpaService> SpaServices => Set<SpaService>();
+    public DbSet<Activity> Activities => Set<Activity>();
+    public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
+    public DbSet<FaqItem> FaqItems => Set<FaqItem>();
+    public DbSet<Inquiry> Inquiries => Set<Inquiry>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

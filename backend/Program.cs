@@ -5,17 +5,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 
-// Configure SQLite Database
+// Configure Database Connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=resort.db";
 builder.Services.AddDbContext<ResortDbContext>(options =>
     options.UseSqlite(connectionString));
 
-// CORS Policy — environment variable yoki appsettings.json dan domenlar o'qiladi
+// CORS Policy
 var allowedOrigins = builder.Configuration["AllowedOrigins"]
-    ?? "http://localhost:3000,http://localhost:3001";
+    ?? "http://localhost:3000,http://localhost:3001,https://archazor.vercel.app";
 
 var originsArray = allowedOrigins
     .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -49,8 +51,10 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure HTTP request pipeline.
-// Swagger — production da ham yoqiladi (API tekshirish uchun)
+// HTTP request pipeline
+app.UseExceptionHandler();
+app.UseStatusCodePages();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -59,5 +63,6 @@ app.UseCors("AllowFrontend");
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

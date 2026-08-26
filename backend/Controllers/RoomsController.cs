@@ -6,7 +6,8 @@ using ResortBackend.DTOs;
 namespace ResortBackend.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/rooms")]
+[Route("api/rooms")]
 public class RoomsController : ControllerBase
 {
     private readonly ResortDbContext _context;
@@ -27,7 +28,7 @@ public class RoomsController : ControllerBase
             .Include(r => r.Images)
             .Include(r => r.RoomAmenities)
                 .ThenInclude(ra => ra.Amenity)
-            .Where(r => r.IsAvailable);
+            .Where(r => r.IsAvailable && r.Status == "Active");
 
         if (guests.HasValue)
         {
@@ -55,9 +56,16 @@ public class RoomsController : ControllerBase
             r.PricePerNight,
             r.Area,
             r.MaxGuests,
+            r.BaseAdults,
+            r.MaxChildren,
+            r.ExtraBedCount,
             r.ViewType,
+            r.Status,
             r.CoverImage,
             r.IsAvailable,
+            r.IsFeatured,
+            r.CheckInTime,
+            r.CheckOutTime,
             r.Images.OrderBy(i => i.SortOrder).Select(i => new RoomImageDto(i.Id, i.ImageUrl, i.SortOrder)).ToList(),
             r.RoomAmenities.Select(ra => new AmenityDto(ra.Amenity.Id, ra.Amenity.Name, ra.Amenity.Icon)).ToList()
         ));
@@ -89,9 +97,16 @@ public class RoomsController : ControllerBase
             room.PricePerNight,
             room.Area,
             room.MaxGuests,
+            room.BaseAdults,
+            room.MaxChildren,
+            room.ExtraBedCount,
             room.ViewType,
+            room.Status,
             room.CoverImage,
             room.IsAvailable,
+            room.IsFeatured,
+            room.CheckInTime,
+            room.CheckOutTime,
             room.Images.OrderBy(i => i.SortOrder).Select(i => new RoomImageDto(i.Id, i.ImageUrl, i.SortOrder)).ToList(),
             room.RoomAmenities.Select(ra => new AmenityDto(ra.Amenity.Id, ra.Amenity.Name, ra.Amenity.Icon)).ToList()
         );

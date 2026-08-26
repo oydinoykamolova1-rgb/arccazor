@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Calendar, User, Phone, Mail, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { X, Calendar, User, Phone, Mail, CheckCircle2, AlertCircle, Loader2, Info } from 'lucide-react';
+import Link from 'next/link';
 import { submitBookingRequest, fetchRooms } from '../../lib/api';
 import { Room } from '../../types';
 
@@ -23,6 +24,7 @@ export default function BookingModal({
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [agreeTerms, setAgreeTerms] = useState(true);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -64,6 +66,11 @@ export default function BookingModal({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!agreeTerms) {
+      setErrorMsg("Iltimos, shartlarga rozilik bildiring.");
+      return;
+    }
+
     if (!formData.fullName.trim() || !formData.phone.trim()) {
       setErrorMsg("Iltimos, ismingiz va telefon raqamingizni kiriting.");
       return;
@@ -102,12 +109,12 @@ export default function BookingModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-[#ddd8ce]">
+      <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-[#ddd8ce]">
         
         {/* Header */}
         <div className="bg-[#244934] text-white px-6 py-5 flex items-center justify-between">
           <div>
-            <h2 className="font-serif-luxury text-2xl font-bold text-amber-200">Xonani bron qilish</h2>
+            <h2 className="font-serif text-2xl font-bold text-amber-200">Xonani bron qilish</h2>
             <p className="text-xs text-emerald-100 mt-0.5">
               {preselectedRoomName ? `Tanlangan xona: ${preselectedRoomName}` : "Resort menejeri so'rovingizni tekshirib aloqaga chiqadi"}
             </p>
@@ -146,6 +153,14 @@ export default function BookingModal({
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4 text-sm text-gray-700">
               
+              {/* AUDIT MANDATED DISCLAIMER BANNER */}
+              <div className="bg-amber-50 border border-amber-200 p-3.5 rounded-xl text-xs text-amber-900 flex items-start gap-2.5">
+                <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <p className="leading-snug">
+                  <strong>Eslatma:</strong> So'rov yuborilishi xona bron qilinganini anglatmaydi. Menejer mavjudlikni tekshirib, siz bilan bog'lanadi.
+                </p>
+              </div>
+
               {errorMsg && (
                 <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl flex items-center gap-2 text-xs">
                   <AlertCircle className="w-4 h-4 shrink-0" />
@@ -307,8 +322,18 @@ export default function BookingModal({
                 />
               </div>
 
-              <div className="bg-[#f6f3ed] p-3 rounded-xl text-[11px] text-gray-600 border border-[#ddd8ce]">
-                💡 <em>So'rov yuborilishi xona avtomatik bron qilinganini anglatmaydi. Kurort menejerimiz mavjudlikni tekshirib, siz bilan bog'lanadi.</em>
+              {/* Privacy consent checkbox */}
+              <div className="flex items-start gap-2 pt-1 text-xs text-slate-600">
+                <input
+                  type="checkbox"
+                  id="privacyConsent"
+                  checked={agreeTerms}
+                  onChange={(e) => setAgreeTerms(e.target.checked)}
+                  className="mt-0.5 accent-[#244934]"
+                />
+                <label htmlFor="privacyConsent">
+                  Men <Link href="/privacy" className="text-[#244934] underline font-semibold" target="_blank">Maxfiylik siyosati</Link> va <Link href="/terms" className="text-[#244934] underline font-semibold" target="_blank">Foydalanish shartlari</Link> bilan tanishdim.
+                </label>
               </div>
 
               {/* Submit btn */}
